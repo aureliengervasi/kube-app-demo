@@ -1,0 +1,8 @@
+---
+version: '3'
+services:
+  app:
+    build: .
+    image: "$REGISTRY_URL/$TRG/kube-app-demo:v0.1"
+    ports:
+    - "8000:8000"
