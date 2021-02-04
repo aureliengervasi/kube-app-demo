@@ -22,7 +22,13 @@ spec:
           name: myapp-config
       containers:
       - name: kubernetes-app
-        image: registry.hub.docker.com/kathlon/kube-app-demo:v0.3
+        image: registry.hub.docker.com/kathlon/kube-app-demo:v0.5
+        env:
+        - name: GUNICORN_CORES
+          valueFrom:
+            resourceFieldRef:
+              containerName: kubernetes-app
+              resource: limits.cpu
         ports:
         - containerPort: 8000
           name: http
