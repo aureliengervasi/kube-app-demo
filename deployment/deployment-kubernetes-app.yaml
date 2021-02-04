@@ -16,9 +16,28 @@ spec:
       labels:
         app: kubernetes-app
     spec:
+      volumes:
+      - name: config-volume
+        configMap:
+          name: myapp-config
       containers:
       - name: kubernetes-app
-        image: registry.hub.docker.com/kathlon/kube-app-demo:v0.1
+        image: registry.hub.docker.com/kathlon/kube-app-demo:v0.3
         ports:
         - containerPort: 8000
           name: http
+        livenessProbe:
+          httpGet: 
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config

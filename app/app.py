@@ -8,6 +8,15 @@ app = Flask(__name__)
 def hello():
     return "Hello Kubernetes!"
 
+@app.route("/config")
+def config():
+    with open('/etc/config/message', 'r') as f:
+        return f.read()
+
+@app.route("/healthz")
+def healthz():
+    return "Tutto bene!"
+
 @app.errorhandler(HTTPException)
 def handle_http_exception(exception: HTTPException):
     return exception.description, exception.code
