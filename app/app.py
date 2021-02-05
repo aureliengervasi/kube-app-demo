@@ -13,14 +13,17 @@ num_requests = Counter("num_requests", "Example counter")
 
 
 def compute():
+    app.logger.info("Starting CPU-consuming thread")
     timeNow = int(round(time.time()))      
     timeToStop = timeNow + 200            
     while timeToStop > timeNow:          
         99 * 99                          
         timeNow = int(round(time.time()))
+    app.logger.info("Ending CPU-consuming thread")
 
 @app.route("/")
 def hello():
+    app.logger.info("this is a log line to the default route")
     num_requests.inc()                                    
     return "Hello Kubernetes!"
 
@@ -42,10 +45,12 @@ def slow():
 
 @app.errorhandler(HTTPException)
 def handle_http_exception(exception: HTTPException):
+    app.logger.error(f"Raised Exception: {exception}")
     return exception.description, exception.code
 
 @app.errorhandler(Exception)
 def handle_exception(exception: Exception):
+    app.logger.error(f"Raised Exception: {exception}")
     return HTTPStatus.INTERNAL_SERVER_ERROR.description, HTTPStatus.INTERNAL_SERVER_ERROR
 
 start_http_server(9001)                                   

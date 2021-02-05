@@ -22,7 +22,7 @@ spec:
           name: myapp-config
       containers:
       - name: kubernetes-app
-        image: registry.hub.docker.com/kathlon/kube-app-demo:v0.5
+        image: registry.hub.docker.com/kathlon/kube-app-demo:v0.6.1
         env:
         - name: GUNICORN_CORES
           valueFrom:

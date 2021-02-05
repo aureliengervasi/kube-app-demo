@@ -20,4 +20,4 @@ USER 1000
 
 # Launch application
 ENTRYPOINT ["gunicorn"]
-CMD ["--config", "config.py", "app:app"]
+CMD ["--config", "config.py", "app:app", "--log-config", "/etc/config/log-config.ini"]
